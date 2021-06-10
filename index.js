@@ -3,7 +3,7 @@ const app = express()
 const mongoose = require('mongoose')
 require('dotenv').config()
 //i want to select a port in which i want to run the project. 
-const PORT = 4000; 
+const port = process.env.PORT
 
 //lets now connect to the our database platform
 //inject a connection string on the first parameter of the connect()
@@ -18,6 +18,11 @@ mongoose.connection.once('open', () => {
 	console.log("Now connected to MongoDB Atlas!")
 })
 
-app.listen(PORT, () => {
-	console.log(`Server is online on port: ${PORT}`); 
+//lets create a message to make sure that the project is properly hosted
+app.get('/', (req, res) => {
+    res.send("successfully served online")
+})
+
+app.listen(port || 4000, () => {
+	console.log(`Server is online on port: ${port}`); 
 })

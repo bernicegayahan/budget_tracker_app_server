@@ -5,6 +5,9 @@ require('dotenv').config()
 //i want to select a port in which i want to run the project. 
 const port = process.env.PORT
 
+//extract the routes for the user
+const userRoutes = require('./routes/user')
+
 //lets now connect to the our database platform
 //inject a connection string on the first parameter of the connect()
 //dont copy my credentials!
@@ -22,6 +25,12 @@ mongoose.connection.once('open', () => {
 app.get('/', (req, res) => {
     res.send("successfully served online")
 })
+
+//currently the request is was not able to process by the API. because it was not able to recognize the incoming request object as a Json format.
+//use the express.json() method.
+app.use(express.json()); 
+
+app.use('/api/users', userRoutes)
 
 app.listen(port || 4000, () => {
 	console.log(`Server is online on port: ${port}`); 

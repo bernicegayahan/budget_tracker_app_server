@@ -2,24 +2,24 @@ const mongoose = require('mongoose');
 
 const userSchema = new mongoose.Schema({
 	firstName: {
-      type: String,
-      required: [true, 'First Name is Required']
+            type: String,
+            required: [true, 'First Name is Required']
 	},
 	lastName: {
-      type: String,
-      required: [true, 'Last Name is Required']
+            type: String,
+            required: [true, 'Last Name is Required']
 	},
 	email: {
-      type: String,
-      required: [true, 'Email Address is Required']
+            type: String,
+            required: [true, 'Email Address is Required']
 	},
 	mobileNo: {
-      type: String,
-      required: [true, 'Mobile Number is Required']
+            type: String,
+            required: [true, 'Mobile Number is Required']
 	},
 	password: {
-      type: String,
-      required: [true, 'Password is Required']
+            type: String,
+            required: [true, 'Password is Required']
 	},
 	categories: [
        {
@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
        	  	required: [true, 'Category Type is Required']
        	  } //if the object is an income or an expense.
        }
-	]
+	],
 	transactions: [
       //we want the user to be able to create multiple transactions
       {

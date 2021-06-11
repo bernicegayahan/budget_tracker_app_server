@@ -11,6 +11,11 @@ router.post('/register', (req, res) => {
    UserController.register(req.body).then(result => res.send(result));
 })
 
+//2. Add Category Route
+router.post('/add-category', (req, res) => {
+    UserController.addCategory(req.body).then(result => res.send(result));
+})
+
 
 //[Secondary Routes]
 

@@ -17,6 +17,26 @@ module.exports.register = (data) => {
 }
 
 
+//Create Category 
+module.exports.addCategory = (params) => {
+   //the app needs to identify the user first 
+   //were going to target the user by his/her ID
+   return User.findById(params.userId).then(user => {
+   	 //describe what will happen upon getting the result of the query.
+   	 user.categories.push({
+   	 	name: params.name,
+   	 	type: params.typeName
+   	 })
+
+   	 //we need to save the changes in the element inside our database
+   	 return user.save().then((user, err) => {
+         return (err) ? false : true
+   	 })
+   })
+}
+
 
 
 //[Secondary Section]
+
+//Email Exists Checker 

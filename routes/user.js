@@ -28,8 +28,24 @@ router.post('/add-record', auth.verify ,(req, res) => {
    UserController.addRecord(req.body).then(result => res.send(result)); 
 })
 
+//4. retrieve categories
+//we will use post because this request would contain a body section.
+router.post('get-categories', auth.verify ,(req, res) => {
+    req.body.userId = auth.decode(req.headers.authorization).id
+    UserController.getCategories(req.body).then(result => res.send(result)); 
+}) 
+
+
+
+
 
 //[Secondary Routes]
+
+//get retrieve user.
+router.get('/details', auth.verify, (req, res) => {
+  const user = auth.decode(req.headers.authorization)
+   UserController.get({ userId: user.id }).then(user => res.send(user))
+})
 
 
 module.exports = router; 

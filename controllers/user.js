@@ -1,6 +1,7 @@
 const User = require('../models/user')
 const bcrypt = require('bcrypt');
 const auth = require('../auth'); 
+
 //[Primary Section]
 //Register New Account
 module.exports.register = (data) => {
@@ -16,6 +17,7 @@ module.exports.register = (data) => {
         return (err) ? false : true
 	})
 }
+
 
 //login
 //lets now create our login function 
@@ -88,7 +90,7 @@ module.exports.addRecord = (params) => {
        type: params.typeName, 
        amount: params.amount,
        description: params.description,
-       balanceAfterTransaction: params.balanceAfterTransaction
+       balanceAfterTransaction: balanceAfterTransaction
     })
 
     return user.save().then((user, error) => {
@@ -97,7 +99,38 @@ module.exports.addRecord = (params) => {
   })
 }
 
+//Group Work
+//Create a Logic for Retrieve Categories 
+module.exports.getCategories = (params) => {
+  return User.findById(params.userId).then(user => {
+    //lets create a control structure that will describe the response to the user was found of not.
+    return user.categories
+   // keep in mind that this if else is already a stretch goal
+     if (typeof params.typeName === "undefined") {
+        return user.categories
+     } 
+     return user.categories.filter((category) => {
+        if (category.type === params.typeName) {
+          return category
+        }
+     })
+  })
+}
+
+
+
+//Retrieve Records 
+
+//30 mins to accomplish the task 5 sending the Demo video test via postman
+
 
 //[Secondary Section]
 
 //Email Exists Checker 
+
+//retrieve user details
+module.exports.get = (params) => {
+  return User.findById(params.userId).then(user => {
+    return { email: user.email }
+  })
+}

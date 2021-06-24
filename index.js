@@ -2,10 +2,12 @@ const express = require('express')
 const app = express()
 const mongoose = require('mongoose')
 require('dotenv').config()
-const cors = require('cors');
+const cors = require('cors')
+
 //i want to select a port in which i want to run the project. 
 const port = process.env.PORT
 app.use(cors())
+
 //extract the routes for the user
 const userRoutes = require('./routes/user')
 

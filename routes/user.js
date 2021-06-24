@@ -30,13 +30,17 @@ router.post('/add-record', auth.verify ,(req, res) => {
 
 //4. retrieve categories
 //we will use post because this request would contain a body section.
-router.post('get-categories', auth.verify ,(req, res) => {
+router.post('/get-categories', auth.verify ,(req, res) => {
     req.body.userId = auth.decode(req.headers.authorization).id
     UserController.getCategories(req.body).then(result => res.send(result)); 
 }) 
 
 
-
+//to get category range breakdown
+router.post('/get-records-breakdown-by-range', auth.verify, (req, res) => {
+  req.body.userId = auth.decode(req.headers.authorization).id
+  UserController.getRecordsBreakdownByRange(req.body).then(result => res.send(result))
+})
 
 
 //[Secondary Routes]

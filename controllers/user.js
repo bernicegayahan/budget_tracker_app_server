@@ -1,6 +1,7 @@
 const User = require('../models/user')
 const bcrypt = require('bcrypt');
 const auth = require('../auth'); 
+const moment = require('moment')
 
 //[Primary Section]
 //Register New Account
@@ -48,7 +49,7 @@ module.exports.addCategory = (params) => {
    	 //describe what will happen upon getting the result of the query.
    	 user.categories.push({
    	 	name: params.name,
-   	 	type: params.typeName
+   	 	type: params.type
    	 })
 
    	 //we need to save the changes in the element inside our database
@@ -104,7 +105,7 @@ module.exports.addRecord = (params) => {
 module.exports.getCategories = (params) => {
   return User.findById(params.userId).then(user => {
     //lets create a control structure that will describe the response to the user was found of not.
-    return user.categories
+    //return user.categories
    // keep in mind that this if else is already a stretch goal
      if (typeof params.typeName === "undefined") {
         return user.categories
@@ -118,6 +119,30 @@ module.exports.getCategories = (params) => {
 }
 
 
+
+//Retrieve Records Breakdown
+module.exports.getRecordsBreakdownByRange = (params) => {
+   return User.findById(params.userId).then(user => {
+      const summary = user.categories.map((category) => {
+        return { categoryName: category.name, totalAmount: 0}
+      })
+
+      user.transactions.filter((transaction) => {
+        //moment is used for date manipulation
+        const isSameOrAfter = moment(transaction.dateAdded).isSameOrAfter(params.fromDate, 'day')
+        const isSameOrBefore = moment(transaction.dateAdded).isSameOrBefore(params.toDate, 'day')
+
+        if(isSameOrAfter && isSameOrBefore) {
+          for(let i = 0; i < summary.length; i++) {
+            if(summary[i].categoryName === transaction.categoryName){
+              summary[i].totalAmount += transaction.amount
+            }
+          }
+        }
+      })
+      return summary
+   })
+}
 
 //Retrieve Records 
 

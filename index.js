@@ -3,7 +3,6 @@ const app = express()
 const mongoose = require('mongoose')
 require('dotenv').config()
 const cors = require('cors')
-
 //i want to select a port in which i want to run the project. 
 const port = process.env.PORT
 app.use(cors())
@@ -26,15 +25,15 @@ mongoose.connection.once('open', () => {
 
 //lets create a message to make sure that the project is properly hosted
 app.get('/', (req, res) => {
-    res.send("successfully served online")
+	res.send("successfully served online")
 })
 
 //currently the request is was not able to process by the API. because it was not able to recognize the incoming request object as a Json format.
 //use the express.json() method.
-app.use(express.json()); 
+app.use(express.json());
 
 app.use('/api/users', userRoutes)
 
 app.listen(port || 4000, () => {
-	console.log(`Server is online on port: ${port}`); 
+	console.log(`Server is online on port: ${port}`);
 })
